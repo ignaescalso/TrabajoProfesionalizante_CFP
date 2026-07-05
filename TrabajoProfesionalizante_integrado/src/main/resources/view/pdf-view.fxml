@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane fitToWidth="true"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.PdfController"
+            stylesheets="@../css/estilo.css">
+
+    <content>
+        <VBox spacing="0" alignment="CENTER" prefWidth="600">
+
+            <VBox alignment="CENTER" spacing="4"
+                  style="-fx-background-color: #1A5FA8; -fx-padding: 16 24 16 24;">
+                  
+              <Label fx:id="lblTipo"
+                       style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;"/>
+                  
+              <HBox alignment="CENTER_LEFT">
+                 <Button text="← Volver al Menu"
+                    onAction="#volverAlMenu"
+                     style="-fx-background-color: transparent;
+                       -fx-text-fill: white;
+                       -fx-font-size: 14px;
+                       -fx-cursor: hand;
+                       -fx-underline: true;"/>
+    		  </HBox>     
+             
+                
+            </VBox>
+
+            <TabPane tabClosingPolicy="UNAVAILABLE"
+                     VBox.vgrow="ALWAYS">
+
+                <Tab text="Identificación">
+                    <content>
+                        <VBox spacing="16" style="-fx-padding: 20;">
+                            <VBox styleClass="card" spacing="12">
+                                <Label text="N° de Serie" style="-fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                                <TextField fx:id="txtSerie" promptText="N° de Serie"/>
+
+                                <Label text="Identificadores" style="-fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                                <FlowPane hgap="10" vgap="10">
+                                    <TextField fx:id="txtIdentificador_1" promptText="Identificador 1°" prefWidth="170"/>
+                                    <TextField fx:id="txtIdentificador_2" promptText="Identificador 2°" prefWidth="170"/>
+                                    <TextField fx:id="txtIdentificador_3" promptText="Identificador 3°" prefWidth="170"/>
+                                </FlowPane>
+
+                                <Label text="CFP" style="-fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                                <TextField fx:id="txtCfp_numero" promptText="CFP N°"/>
+                            </VBox>
+                        </VBox>
+                    </content>
+                </Tab>
+
+                <Tab text="Datos personales">
+                    <content>
+                        <VBox spacing="16" style="-fx-padding: 20;">
+                            <VBox styleClass="card" spacing="12">
+                                <Label text="Información del alumno" style="-fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                                <FlowPane hgap="10" vgap="10">
+                                    <TextField fx:id="txtNombre"           promptText="Nombre completo"    prefWidth="260"/>
+                                    <TextField fx:id="txtDni"              promptText="DNI"                prefWidth="170"/>
+                                    <TextField fx:id="txtProvincia"        promptText="Provincia"          prefWidth="200"/>
+                                    <TextField fx:id="txtFecha_nacimiento" promptText="Fecha de nacimiento" prefWidth="200"/>
+                                </FlowPane>
+                            </VBox>
+                        </VBox>
+                    </content>
+                </Tab>
+
+                <Tab text="Datos de emisión">
+                    <content>
+                        <VBox spacing="16" style="-fx-padding: 20;">
+                            <VBox styleClass="card" spacing="12">
+                                <Label text="Curso" style="-fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                                <FlowPane hgap="10" vgap="10">
+                                    <TextField fx:id="txtCurso"        promptText="Curso"            prefWidth="260"/>
+                                    <TextField fx:id="txtArea"         promptText="Área"             prefWidth="200"/>
+                                    <TextField fx:id="txtAnexo"        promptText="Anexo"            prefWidth="170"/>
+                                    <TextField fx:id="txtDuracion_hs"  promptText="Horas de duración" prefWidth="170"/>
+                                    <TextField fx:id="txtFecha_egreso" promptText="Fecha de egreso"  prefWidth="170"/>
+                                </FlowPane>
+
+                                <Label text="Emisión" style="-fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                                <FlowPane hgap="10" vgap="10">
+                                    <TextField fx:id="txtLocalidad"   promptText="Localidad" prefWidth="200"/>
+                                    <TextField fx:id="txtDia_emision" promptText="Día"       prefWidth="80"/>
+                                    <TextField fx:id="txtMes_emision" promptText="Mes"       prefWidth="120"/>
+                                    <TextField fx:id="txtAnio_emision" promptText="Año"      prefWidth="100"/>
+                                </FlowPane>
+                            </VBox>
+
+                            <VBox alignment="CENTER" spacing="10">
+                                <Button text="Generar certificado"
+                                        onAction="#generarCertificado"
+                                        prefWidth="200"/>
+                                <Label fx:id="lblMensaje" styleClass="label-mensaje"/>
+                            </VBox>
+                        </VBox>
+                    </content>
+                </Tab>
+
+            </TabPane>
+
+        </VBox>
+    </content>
+
+</ScrollPane>

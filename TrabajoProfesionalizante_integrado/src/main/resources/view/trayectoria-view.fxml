@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.TrayectoriaController"
+            stylesheets="@../css/estilo.css">
+
+    <top>
+        <VBox alignment="CENTER" spacing="6"
+              style="-fx-background-color: #1A5FA8; -fx-padding: 18 24 18 24;">
+            <Label text="Generador de Certificados"
+                   style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <Label fx:id="lblTipo"
+                   text="Tipo no seleccionado"
+                   style="-fx-text-fill: rgba(255,255,255,0.85); -fx-font-size: 13px;"/>
+            <Button text="← Volver al menú"
+                    onAction="#volverAlMenu"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand; -fx-underline: true;"/>
+        </VBox>
+    </top>
+
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+
+            <Tab text="Datos Personales">
+                <GridPane hgap="10" vgap="10">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <Label text="Nombre"/>
+                    <TextField fx:id="txtNombre" GridPane.columnIndex="1" prefWidth="260"/>
+
+                    <Label text="DNI" GridPane.rowIndex="1"/>
+                    <TextField fx:id="txtDni" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                    <Label text="Provincia de nacimiento" GridPane.rowIndex="2"/>
+                    <TextField fx:id="txtProvinciaNacimiento" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                    <Label text="Fecha de nacimiento" GridPane.rowIndex="3"/>
+                    <DatePicker fx:id="dpFechaNacimiento" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                </GridPane>
+            </Tab>
+
+            <Tab text="Datos Académicos">
+                <GridPane hgap="10" vgap="10">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <Label text="Capacitación cursada"/>
+                    <TextField fx:id="txtCapacitacionCursada" GridPane.columnIndex="1" prefWidth="300"/>
+
+                    <Label text="CFP Número" GridPane.rowIndex="1"/>
+                    <TextField fx:id="txtCfpnumero" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                    <Label text="Cantidad de horas" GridPane.rowIndex="2"/>
+                    <TextField fx:id="txtCantidadHoras" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                    <Label text="Trayecto formativo" GridPane.rowIndex="3"/>
+                    <TextField fx:id="txtTrayectoFormativo" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                    <Label text="Fecha de egreso" GridPane.rowIndex="4"/>
+                    <DatePicker fx:id="dpFechaEgreso" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+                    <Label text="Ciudad de egreso" GridPane.rowIndex="5"/>
+                    <TextField fx:id="txtCiudadEgreso" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                </GridPane>
+            </Tab>
+
+            <Tab text="Componentes">
+                <VBox spacing="15">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <TitledPane text="Componente 1" expanded="true">
+                        <GridPane hgap="10" vgap="10">
+                            <TextField fx:id="txtIdComponente1" promptText="ID" prefWidth="90"/>
+                            <TextField fx:id="numeroCarton1" promptText="Cartón" GridPane.columnIndex="1" prefWidth="100"/>
+                            <TextField fx:id="txtCapacitacion1" promptText="Capacitación" GridPane.columnIndex="2" prefWidth="240"/>
+                            <TextField fx:id="txtHorasReloj1" promptText="Horas" GridPane.columnIndex="3" prefWidth="90"/>
+                        </GridPane>
+                    </TitledPane>
+
+                    <TitledPane text="Componente 2" expanded="true">
+                        <GridPane hgap="10" vgap="10">
+                            <TextField fx:id="txtIdComponente2" promptText="ID" prefWidth="90"/>
+                            <TextField fx:id="numeroCarton2" promptText="Cartón" GridPane.columnIndex="1" prefWidth="100"/>
+                            <TextField fx:id="txtCapacitacion2" promptText="Capacitación" GridPane.columnIndex="2" prefWidth="240"/>
+                            <TextField fx:id="txtHorasReloj2" promptText="Horas" GridPane.columnIndex="3" prefWidth="90"/>
+                        </GridPane>
+                    </TitledPane>
+
+                    <TitledPane text="Carga horaria acumulada" expanded="true">
+                        <TextField fx:id="cargaHorariaAcumulada" promptText="Carga horaria total"/>
+                    </TitledPane>
+                </VBox>
+            </Tab>
+
+            <Tab text="Archivo PDF">
+                <VBox spacing="15" alignment="CENTER">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <Label text="Datos del certificado"
+                           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+                    <TextField fx:id="txtSerie" promptText="Serie" prefWidth="220"/>
+                    <TextField fx:id="txtNumero" promptText="Número" prefWidth="220"/>
+                    <TextField fx:id="txtNumero2" promptText="Número 2" prefWidth="220"/>
+                    <TextField fx:id="txtNumero3" promptText="Número 3" prefWidth="220"/>
+
+                    <TextField fx:id="txtDiaCertificado" promptText="Día" prefWidth="220"/>
+                    <TextField fx:id="txtMesCertificado" promptText="Mes" prefWidth="220"/>
+                    <TextField fx:id="txtAnioCertificado" promptText="Año" prefWidth="220"/>
+
+                    <Separator/>
+
+                    <Button text="Generar certificado"
+                            onAction="#generarPDF"
+                            prefWidth="220"/>
+
+                    <Label fx:id="lblMensaje" styleClass="label-mensaje"/>
+                </VBox>
+            </Tab>
+        </TabPane>
+    </center>
+</BorderPane>

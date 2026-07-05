@@ -1,0 +1,94 @@
+.root {
+    -fx-background-color: #F4F6FA;
+    -fx-font-family: "Ubuntu", "DejaVu Sans", sans-serif;
+    -fx-font-size: 13px;
+}
+ 
+.scroll-pane {
+    -fx-background: #F4F6FA;
+    -fx-background-color: #F4F6FA;
+}
+ 
+.scroll-pane > .viewport {
+    -fx-background-color: #F4F6FA;
+}
+ 
+.button {
+    -fx-background-color: #1A5FA8;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 9 24 9 24;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+ 
+.button:hover {
+    -fx-background-color: #154E8C;
+}
+ 
+.button:pressed {
+    -fx-background-color: #0F3D70;
+}
+ 
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #C8D3E6;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 8 12 8 12;
+    -fx-font-size: 13px;
+    -fx-text-fill: #1C2B45;
+    -fx-prompt-text-fill: #A0AABF;
+    -fx-pref-height: 36px;
+    -fx-min-width: 280px;
+    -fx-max-width: 420px;
+}
+ 
+.text-field:focused {
+    -fx-border-color: #1A5FA8;
+    -fx-border-width: 2;
+    -fx-background-color: white;
+}
+ 
+.text-field:hover {
+    -fx-border-color: #8AABDA;
+}
+ 
+.label {
+    -fx-text-fill: #3A4A60;
+    -fx-font-size: 13px;
+}
+
+.titulo-seccion {
+    -fx-text-fill: #1A5FA8;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+ 
+.scroll-bar:vertical {
+    -fx-background-color: #E8ECF3;
+    -fx-pref-width: 8px;
+}
+ 
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #B0BEDB;
+    -fx-background-radius: 4;
+}
+ 
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #1A5FA8;
+}
+ 
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 2;
+}
+ 
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
+}

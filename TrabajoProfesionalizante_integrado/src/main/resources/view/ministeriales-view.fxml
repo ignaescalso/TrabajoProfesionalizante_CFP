@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<TabPane xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         fx:controller="controller.MinisterialesController">
+    <tabs>
+
+        <Tab text="Datos del Certificado" closable="false">
+            <content>
+                <ScrollPane fitToWidth="true">
+                    <content>
+                        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 15;">
+                            <Label text="Datos del Certificado" styleClass="etiqueta"/>
+                            <Label fx:id="lblTipo" text="Certificado" styleClass="etiqueta"/>
+                            <TextField fx:id="txtSerie" promptText="Serie"/>
+                            <TextField fx:id="txtNumeroCertificado" promptText="Número Certificado"/>
+                            <TextField fx:id="txtCodigoCertificado" promptText="Código Certificado"/>
+                            <TextField fx:id="txtAñoCertificado" promptText="Año Certificado"/>
+                            <TextField fx:id="txtAnexo" promptText="Anexo"/>
+                            <TextField fx:id="txtNumeroCentroFormacion" promptText="Numero de centro de formacion"/>
+                            <Button text="Volver" onAction="#volver"/>
+                        	</VBox>
+                    		</content>
+                			</ScrollPane>
+            				</content>
+       						 </Tab>
+
+        <Tab text="Datos Personales" closable="false">
+            <content>
+                <ScrollPane fitToWidth="true">
+                    <content>
+                        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 15;">
+                            <Label text="Datos Personales" styleClass="etiqueta"/>
+                            <TextField fx:id="txtNombre" promptText="Nombre completo"/>
+                            <TextField fx:id="txtDni" promptText="DNI"/>
+                            <TextField fx:id="txtFechaNacimiento" promptText="Fecha de nacimiento"/>
+                            <TextField fx:id="txtProvinciaNacimiento" promptText="Provincia de nacimiento"/>
+                        	</VBox>
+                    		</content>
+                			</ScrollPane>
+            				</content>
+        					</Tab>
+
+        <Tab text="Lugar y Fecha" closable="false">
+            <content>
+                <ScrollPane fitToWidth="true">
+                    <content>
+                        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 15;">
+                            <Label text="Lugar y Fecha" styleClass="etiqueta"/>
+                            <TextField fx:id="txtCiudad" promptText="Ciudad"/>
+                            <TextField fx:id="txtDia" promptText="Día"/>
+                            <TextField fx:id="txtMes" promptText="Mes"/>
+                            <TextField fx:id="txtAño" promptText="Año"/>
+                        	</VBox>
+                    		</content>
+               				</ScrollPane>
+            				</content>
+        					</Tab>
+
+        <Tab text="Datos del Curso" closable="false">
+            <content>
+                <ScrollPane fitToWidth="true">
+                    <content>
+                        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 15;">
+                            <Label text="Datos del Curso" styleClass="etiqueta"/>
+                            <TextField fx:id="txtArea" promptText="Área"/>
+                            <TextField fx:id="txtTipoCertificado" promptText="Tipo Certificado"/>
+                            <TextField fx:id="txtHorasReloj" promptText="Horas reloj"/>
+                            <TextField fx:id="txtFechaEgreso" promptText="Fecha egreso"/>
+                            <Button text="Generar" onAction="#generarCertificado"/>
+                            <Label fx:id="lblMensaje"/>
+ </VBox>
+ </content>
+ </ScrollPane>
+ </content>
+ </Tab>
+
+ </tabs>
+</TabPane>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="0"
+      alignment="CENTER"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.SeleccionController"
+      stylesheets="@../css/estilo.css"
+      style="-fx-background-color: #F0F4F8;">
+
+    <!-- Cabecera azul -->
+    <VBox alignment="CENTER" spacing="6"
+          style="-fx-background-color: #1A5FA8; -fx-padding: 30 24 30 24;">
+        <Label text="Generador de Certificados"
+               style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+        <Label text="Seleccioná el tipo de certificado para continuar"
+               style="-fx-text-fill: rgba(255,255,255,0.8); -fx-font-size: 13px;"/>
+    </VBox>
+
+    <!-- Cuerpo central -->
+    <VBox alignment="CENTER" spacing="16"
+          styleClass="card"
+          style="-fx-padding: 32; -fx-max-width: 360; -fx-pref-width: 360;"
+          VBox.vgrow="ALWAYS">
+
+        <Label text="Tipo de certificado"
+               style="-fx-font-weight: bold; -fx-text-fill: #374151; -fx-font-size: 13px;"/>
+
+        <ComboBox fx:id="cmbTipo"
+                  prefWidth="300"
+                  promptText="Seleccioná una opción..."/>
+
+        <Button text="Continuar →"
+                onAction="#continuar"
+                prefWidth="300"/>
+
+    </VBox>
+
+    <!-- Pie de pagina -->
+    <VBox alignment="CENTER"
+          style="-fx-padding: 16;">
+        <Label text="CFP - Provincia de Chubut"
+               style="-fx-text-fill: #9CA3AF; -fx-font-size: 11px;"/>
+    </VBox>
+
+</VBox>
