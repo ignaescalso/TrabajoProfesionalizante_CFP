@@ -95,22 +95,22 @@ public class PdfService {
                 CoordenadasActualizacion.SERIE_Y,
                 12);
 
-        PdfWriterUtil.escribir(content, certificado.getIdentificador_1(),
+        PdfWriterUtil.escribir(content, certificado.getIdentificador1(),
                 CoordenadasActualizacion.IDENTIFICADOR_1_X,
                 CoordenadasActualizacion.IDENTIFICADOR_1_Y,
                 12);
 
-        PdfWriterUtil.escribir(content, certificado.getIdentificador_2(),
+        PdfWriterUtil.escribir(content, certificado.getIdentificador2(),
                 CoordenadasActualizacion.IDENTIFICADOR_2_X,
                 CoordenadasActualizacion.IDENTIFICADOR_2_Y,
                 12);
 
-        PdfWriterUtil.escribir(content, certificado.getIdentificador_3(),
+        PdfWriterUtil.escribir(content, certificado.getIdentificador3(),
                 CoordenadasActualizacion.IDENTIFICADOR_3_X,
                 CoordenadasActualizacion.IDENTIFICADOR_3_Y,
                 12);
 
-        PdfWriterUtil.escribir(content, certificado.getCfp_numero(),
+        PdfWriterUtil.escribir(content, certificado.getCfpNumero(),
                 CoordenadasActualizacion.CFP_NUMERO_X,
                 CoordenadasActualizacion.CFP_NUMERO_Y,
                 12);
@@ -130,7 +130,7 @@ public class PdfService {
                 CoordenadasActualizacion.PROVINCIA_Y,
                 12);
 
-        PdfWriterUtil.escribir(content, certificado.getFecha_nacimiento(),
+        PdfWriterUtil.escribir(content, certificado.getFechaNacimiento(),
                 CoordenadasActualizacion.FECHA_NACIMIENTO_X,
                 CoordenadasActualizacion.FECHA_NACIMIENTO_Y,
                 12);
@@ -150,34 +150,25 @@ public class PdfService {
                 CoordenadasActualizacion.ANEXO_Y,
                 12);
 
-        PdfWriterUtil.escribir(content, certificado.getDuracion_hs(),
+        PdfWriterUtil.escribir(content, certificado.getDuracionHs(),
                 CoordenadasActualizacion.DURACION_HS_X,
                 CoordenadasActualizacion.DURACION_HS_Y,
                 12);
 
-        PdfWriterUtil.escribir(content, certificado.getFecha_egreso(),
+        PdfWriterUtil.escribir(content, certificado.getFechaEgreso(),
                 CoordenadasActualizacion.FECHA_EGRESO_X,
                 CoordenadasActualizacion.FECHA_EGRESO_Y,
                 12);
 
-        PdfWriterUtil.escribir(content, certificado.getLocalidad(),
+        PdfWriterUtil.escribir(content, certificado.getCiudadEgreso(),
                 CoordenadasActualizacion.LOCALIDAD_X,
                 CoordenadasActualizacion.LOCALIDAD_Y,
                 12);
 
-        PdfWriterUtil.escribir(content, certificado.getDia_emision(),
+        // Ahora la fecha de emisión se maneja como un único string
+        PdfWriterUtil.escribir(content, certificado.getFechaEmision(),
                 CoordenadasActualizacion.DIA_EMISION_X,
                 CoordenadasActualizacion.DIA_EMISION_Y,
-                12);
-
-        PdfWriterUtil.escribir(content, certificado.getMes_emision(),
-                CoordenadasActualizacion.MES_EMISION_X,
-                CoordenadasActualizacion.MES_EMISION_Y,
-                12);
-
-        PdfWriterUtil.escribir(content, certificado.getAnio_emision(),
-                CoordenadasActualizacion.ANIO_EMISION_X,
-                CoordenadasActualizacion.ANIO_EMISION_Y,
                 12);
     }
 
@@ -231,7 +222,7 @@ public class PdfService {
                 CoordenadasTrayectoria.CAPACITACION_Y,
                 12);
 
-        PdfWriterUtil.escribirExacto(content, certificado.getCfpnumero(),
+        PdfWriterUtil.escribirExacto(content, certificado.getCfpNumero(),
                 CoordenadasTrayectoria.CFPNUMERO_X,
                 CoordenadasTrayectoria.CFPNUMERO_Y,
                 12);
@@ -256,19 +247,10 @@ public class PdfService {
                 CoordenadasTrayectoria.CIUDAD_EGRESO_Y,
                 12);
 
-        PdfWriterUtil.escribirExacto(content, certificado.getDiaCertificado(),
+        // Fecha del certificado como un único string
+        PdfWriterUtil.escribirExacto(content, certificado.getFechaCertificado(),
                 CoordenadasTrayectoria.DIA_X,
                 CoordenadasTrayectoria.DIA_Y,
-                12);
-
-        PdfWriterUtil.escribirExacto(content, certificado.getMesCertificado(),
-                CoordenadasTrayectoria.MES_X,
-                CoordenadasTrayectoria.MES_Y,
-                12);
-
-        PdfWriterUtil.escribirExacto(content, certificado.getAnioCertificado(),
-                CoordenadasTrayectoria.ANIO_X,
-                CoordenadasTrayectoria.ANIO_Y,
                 12);
 
         PdfWriterUtil.escribirExacto(content, certificado.getIdComponente1(),
