@@ -101,7 +101,10 @@
                                     <Button text="Cargar desde Excel/CSV"
                                             onAction="#cargarDesdeExcel"
                                             prefWidth="200"/>
-                                </HBox>
+                                                                    <Button text="Generar Excel de ejemplo"
+                                                                            onAction="#generarExcelEjemplo"
+                                                                            prefWidth="200"/>
+                                                                </HBox>
                                 <Label fx:id="lblMensaje" styleClass="label-mensaje"/>
                             </VBox>
                         </VBox>

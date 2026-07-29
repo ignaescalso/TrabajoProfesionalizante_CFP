@@ -179,6 +179,27 @@ public class PdfController {
     private String safe(String s) { return s == null ? "" : s; }
 
     @FXML
+    private void generarExcelEjemplo() {
+        try {
+            FileChooser chooser = new FileChooser();
+            chooser.setTitle("Guardar Excel de ejemplo");
+            chooser.setInitialFileName("certificados_ejemplo.xlsx");
+            Stage stage = (Stage) lblTipo.getScene().getWindow();
+            File file = chooser.showSaveDialog(stage);
+            if (file == null) {
+                lblMensaje.setText("Guardado cancelado.");
+                return;
+            }
+            ExcelService excel = new ExcelService();
+            excel.generateSampleXlsx(file);
+            lblMensaje.setText("Excel generado: " + file.getAbsolutePath());
+        } catch (Exception e) {
+            lblMensaje.setText("Error generando Excel: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void generarCertificado() {
 
         try {
