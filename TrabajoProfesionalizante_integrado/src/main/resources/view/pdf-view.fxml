@@ -101,8 +101,8 @@
                                     <Button text="Cargar desde Excel/CSV"
                                             onAction="#cargarDesdeExcel"
                                             prefWidth="200"/>
-                                                                    <Button text="Generar Excel de ejemplo"
-                                                                            onAction="#generarExcelEjemplo"
+                                                                    <Button text="Procesar Excel (batch)"
+                                                                            onAction="#procesarExcel"
                                                                             prefWidth="200"/>
                                                                 </HBox>
                                 <Label fx:id="lblMensaje" styleClass="label-mensaje"/>

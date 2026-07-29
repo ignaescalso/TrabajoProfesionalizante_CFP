@@ -15,6 +15,9 @@ import service.PdfService;
 
 import java.io.File;
 import java.util.List;
+import java.util.ArrayList;
+
+import javafx.application.Platform;
 
 public class PdfController {
 	
@@ -195,6 +198,64 @@ public class PdfController {
             lblMensaje.setText("Excel generado: " + file.getAbsolutePath());
         } catch (Exception e) {
             lblMensaje.setText("Error generando Excel: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void procesarExcel() {
+        try {
+            FileChooser chooser = new FileChooser();
+            chooser.setTitle("Seleccionar archivo Excel/CSV para procesar");
+            chooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("CSV files", "*.csv"),
+                    new FileChooser.ExtensionFilter("Excel XLSX", "*.xlsx"),
+                    new FileChooser.ExtensionFilter("Excel XLS", "*.xls")
+            );
+            Stage stage = (Stage) lblTipo.getScene().getWindow();
+            File file = chooser.showOpenDialog(stage);
+            if (file == null) {
+                lblMensaje.setText("Selección cancelada.");
+                return;
+            }
+
+            ExcelService excel = new ExcelService();
+            List<Certificado> list = excel.leerExcel(file, tipo);
+            if (list == null || list.isEmpty()) {
+                lblMensaje.setText("No se encontraron registros en el archivo.");
+                return;
+            }
+
+            lblMensaje.setText("Procesando " + list.size() + " registros...");
+
+            // Ejecutar en hilo de fondo
+            new Thread(() -> {
+                PdfService pdfService = new PdfService();
+                int success = 0;
+                List<String> errors = new ArrayList<>();
+                for (int i = 0; i < list.size(); i++) {
+                    Certificado c = list.get(i);
+                    try {
+                        // Generar sin abrir carpetas para no interrumpir el flujo
+                        pdfService.generarSinAbrir(c, tipo);
+                        success++;
+                    } catch (Exception ex) {
+                        errors.add("Fila " + (i+1) + ": " + ex.getMessage());
+                    }
+                }
+
+                final int ok = success;
+                final int total = list.size();
+                final List<String> errs = errors;
+                Platform.runLater(() -> {
+                    String msg = "Procesados: " + ok + " / " + total;
+                    if (!errs.isEmpty()) msg += ". Errores: " + errs.size();
+                    lblMensaje.setText(msg);
+                });
+            }).start();
+
+        } catch (Exception e) {
+            lblMensaje.setText("Error leyendo archivo: " + e.getMessage());
             e.printStackTrace();
         }
     }
