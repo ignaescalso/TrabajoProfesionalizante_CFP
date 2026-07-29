@@ -94,6 +94,9 @@
                             </VBox>
 
                             <VBox alignment="CENTER" spacing="10">
+                                <Button text="Cargar desde Excel/CSV"
+                                        onAction="#cargarDesdeExcel"
+                                        prefWidth="200"/>
                                 <Button text="Generar certificado"
                                         onAction="#generarCertificado"
                                         prefWidth="200"/>
