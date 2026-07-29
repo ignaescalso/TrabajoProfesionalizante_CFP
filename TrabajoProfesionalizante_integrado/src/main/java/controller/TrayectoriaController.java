@@ -1,8 +1,12 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,9 +14,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.Certificado;
 import model.TipoCertificado;
+import service.ExcelService;
 import service.PdfService;
 
 public class TrayectoriaController {
@@ -115,6 +121,105 @@ public class TrayectoriaController {
             lblMensaje.setText(e.getMessage());
         }
     }
+
+    @FXML
+    private void cargarDesdeExcel() {
+        try {
+            FileChooser chooser = new FileChooser();
+            chooser.setTitle("Seleccionar archivo Excel/CSV");
+            chooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("CSV files", "*.csv"),
+                    new FileChooser.ExtensionFilter("Excel XLSX", "*.xlsx"),
+                    new FileChooser.ExtensionFilter("Excel XLS", "*.xls")
+            );
+            Stage stage = (Stage) lblTipo.getScene().getWindow();
+            File file = chooser.showOpenDialog(stage);
+            if (file == null) {
+                lblMensaje.setText("Selección cancelada.");
+                return;
+            }
+
+            ExcelService excel = new ExcelService();
+            List<Certificado> list = excel.leerExcel(file, tipoSeleccionado);
+            if (list == null || list.isEmpty()) {
+                lblMensaje.setText("No se encontraron registros en el archivo.");
+                return;
+            }
+
+            Certificado c = list.get(0);
+            populateFieldsFromCertificado(c);
+            lblMensaje.setText("Cargado desde: " + file.getName());
+
+        } catch (Exception e) {
+            lblMensaje.setText("Error leyendo archivo: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void populateFieldsFromCertificado(Certificado c) {
+        if (c == null) return;
+
+        txtNombre.setText(safe(c.getNombre()));
+        txtDni.setText(safe(c.getDni()));
+        txtProvinciaNacimiento.setText(safe(c.getProvinciaNacimiento()));
+        // fechaNacimiento puede venir en formato ISO o como string
+        txtFechaNacimientoSet(c.getFechaNacimiento()!=null?c.getFechaNacimiento():c.getFecha_nacimiento());
+
+        txtCapacitacionCursada.setText(safe(c.getCapacitacionCursada()));
+        txtCfpnumero.setText(safe(c.getCfpnumero()!=null?c.getCfpnumero():c.getCfpNumero()));
+        txtCantidadHoras.setText(safe(c.getCantidadHoras()));
+        txtTrayectoFormativo.setText(safe(c.getTrayectoFormativo()));
+        txtFechaEgresoSet(c.getFechaEgreso()!=null?c.getFechaEgreso():c.getFecha_egreso());
+        txtCiudadEgreso.setText(safe(c.getCiudadEgreso()!=null?c.getCiudadEgreso():c.getLocalidad()));
+
+        txtIdComponente1.setText(safe(c.getIdComponente1()));
+        numeroCarton1.setText(safe(c.getNumeroCarton1()));
+        txtCapacitacion1.setText(safe(c.getCapacitacion1()));
+        txtHorasReloj1.setText(safe(c.getHorasReloj1()));
+
+        txtIdComponente2.setText(safe(c.getIdComponente2()));
+        numeroCarton2.setText(safe(c.getNumeroCarton2()));
+        txtCapacitacion2.setText(safe(c.getCapacitacion2()));
+        txtHorasReloj2.setText(safe(c.getHorasReloj2()));
+
+        cargaHorariaAcumulada.setText(safe(c.getCargaHorariaAcumulada()));
+
+        txtSerie.setText(safe(c.getSerie()));
+        txtNumero.setText(safe(c.getNumero()));
+        txtNumero2.setText(safe(c.getNumero2()));
+        txtNumero3.setText(safe(c.getNumero3()));
+
+        txtDiaCertificado.setText(safe(c.getDiaCertificado()));
+        txtMesCertificado.setText(safe(c.getMesCertificado()));
+        txtAnioCertificado.setText(safe(c.getAnioCertificado()));
+    }
+
+    private void txtFechaEgresoSet(String fecha) {
+        if (fecha == null || fecha.isBlank()) return;
+        try {
+            LocalDate d = LocalDate.parse(fecha);
+            dpFechaEgreso.setValue(d);
+        } catch (Exception ex) {
+            // ignore parse error
+        }
+    }
+
+    private void txtFechaNacimientoSet(String fecha) {
+        if (fecha == null || fecha.isBlank()) return;
+        try {
+            LocalDate d = LocalDate.parse(fecha);
+            dpFechaNacimiento.setValue(d);
+        } catch (Exception ex) {
+            // ignore
+        }
+    }
+
+    private String safe(TextField field) {
+        if (field == null || field.getText() == null) return "";
+        return field.getText().trim();
+    }
+
+
 
     @FXML
     private void volverAlMenu() throws IOException {
