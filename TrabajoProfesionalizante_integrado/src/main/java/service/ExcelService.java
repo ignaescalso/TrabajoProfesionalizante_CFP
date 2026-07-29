@@ -250,6 +250,41 @@ public class ExcelService {
 	        return c;
 	    }
 
+	    public void generateSampleXlsx(File archivo) throws Exception {
+	        try (org.apache.poi.xssf.usermodel.XSSFWorkbook wb = new org.apache.poi.xssf.usermodel.XSSFWorkbook()) {
+	            org.apache.poi.ss.usermodel.Sheet sheet = wb.createSheet("certificados");
+	            String[] headers = new String[] {
+	                "serie","identificador_1","identificador_2","identificador_3","cfp_numero","nombre","dni","provincia","fecha_nacimiento","curso","area","anexo","duracion_hs","fecha_egreso","localidad","dia_emision","mes_emision","anio_emision",
+	                "numero","numero2","numero3","provinciaNacimiento","fechaNacimiento","cfpnumero","capacitacionCursada","cantidadHoras","trayectoFormativo","fechaEgreso","ciudadEgreso","diaCertificado","mesCertificado","anioCertificado",
+	                "idComponente1","capacitacion1","horasReloj1","numeroCarton1","idComponente2","capacitacion2","horasReloj2","numeroCarton2","cargaHorariaAcumulada","fechaEmision"
+	            };
+
+	            org.apache.poi.ss.usermodel.Row header = sheet.createRow(0);
+	            for (int i = 0; i < headers.length; i++) {
+	                header.createCell(i).setCellValue(headers[i]);
+	            }
+
+	            org.apache.poi.ss.usermodel.Row row = sheet.createRow(1);
+	            String[] sample = new String[] {
+	                "ABC123","ID1","ID2","ID3","657","Juan Perez","20123456","Chubut","01/01/1990","Programacion","Informatica","Sede Central","120","01/12/2025","Comodoro Rivadavia","01","12","2025",
+	                "0001","0002","0003","Chubut","01/01/1990","657","Cursado A","60","Trayecto 1","01/12/2025","Comodoro Rivadavia","01","12","2025",
+	                "C1","Cap1","10","100","C2","Cap2","20","101","180","01/05/2026"
+	            };
+	            for (int i = 0; i < sample.length; i++) {
+	                row.createCell(i).setCellValue(sample[i]);
+	            }
+
+	            // Autosize columns (limited to first 50 for performance)
+	            for (int i = 0; i < Math.min(headers.length, 50); i++) {
+	                sheet.autoSizeColumn(i);
+	            }
+
+	            try (java.io.FileOutputStream fos = new java.io.FileOutputStream(archivo)) {
+	                wb.write(fos);
+	            }
+	        }
+	    }
+
 	}
 
 	

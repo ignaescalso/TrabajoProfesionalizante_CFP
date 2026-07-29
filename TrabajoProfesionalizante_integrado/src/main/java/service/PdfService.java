@@ -467,4 +467,65 @@ public class PdfService {
             throw new IllegalArgumentException("No se recibieron datos ministeriales.");
         }
     }
+
+    // Versión que no abre la carpeta de salida — útil para procesos batch
+    public void generarSinAbrir(
+            Certificado certificado,
+            TipoCertificado tipo)
+            throws IOException {
+        generarSinAbrir(certificado, null, tipo);
+    }
+
+    public void generarSinAbrir(
+            Certificado certificado,
+            Ministeriales ministeriales,
+            TipoCertificado tipo)
+            throws IOException {
+
+        if (tipo == null) {
+            throw new IllegalArgumentException("No se seleccionó un tipo de certificado.");
+        }
+
+        try (InputStream plantillaStream = getClass().getResourceAsStream(
+                "/pdf/" + tipo.getArchivoPdf())) {
+
+            if (plantillaStream == null) {
+                throw new IOException("No se encontró la plantilla PDF: " + tipo.getArchivoPdf());
+            }
+
+            try (PDDocument document = PDDocument.load(plantillaStream)) {
+                PDPage page = document.getPage(0);
+
+                try (PDPageContentStream content = new PDPageContentStream(
+                        document,
+                        page,
+                        AppendMode.APPEND,
+                        true,
+                        true)) {
+
+                    switch (tipo) {
+                        case CAPACITACION:
+                            validarCertificado(certificado);
+                            escribirCapacitacion(content, certificado);
+                            break;
+
+                        case ACTUALIZACION:
+                        case TRAYECTORIA:
+                            validarCertificado(certificado);
+                            escribirTrayectoriaActualizacion(content, certificado);
+                            break;
+
+                        case MINISTERIALES:
+                            validarMinisteriales(ministeriales);
+                            escribirMinisteriales(content, ministeriales);
+                            break;
+                    }
+                }
+
+                Path archivoSalida = crearRutaSalida(tipo, certificado, ministeriales);
+                document.save(archivoSalida.toString());
+                // Nota: no abrir carpeta automáticamente
+            }
+        }
+    }
 }
