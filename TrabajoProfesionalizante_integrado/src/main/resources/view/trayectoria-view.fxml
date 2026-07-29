@@ -122,9 +122,17 @@
 
                     <Separator/>
 
-                    <Button text="Generar certificado"
-                            onAction="#generarPDF"
-                            prefWidth="220"/>
+                    <HBox alignment="CENTER" spacing="10">
+                        <Button text="Generar certificado"
+                                onAction="#generarPDF"
+                                prefWidth="220"/>
+                        <Button text="Cargar desde Excel/CSV"
+                                onAction="#cargarDesdeExcel"
+                                prefWidth="220"/>
+                        <Button text="Procesar Excel (batch)"
+                                onAction="#procesarExcel"
+                                prefWidth="220"/>
+                    </HBox>
 
                     <Label fx:id="lblMensaje" styleClass="label-mensaje"/>
                 </VBox>
