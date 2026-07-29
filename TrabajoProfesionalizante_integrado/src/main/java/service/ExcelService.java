@@ -2,8 +2,10 @@ package service;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import model.Certificado;
 import model.TipoCertificado;
@@ -14,11 +16,29 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import util.ExcelReaderUtil;
+
 public class ExcelService {
 
+	    /**
+	     * Lee un archivo CSV o XLSX según la extensión. Si es CSV delega en ExcelReaderUtil
+	     * y mapea filas por cabeceras. Si no, usa el lector XLSX existente.
+	     */
 	    public List<Certificado> leerExcel(
 	            File archivo,
 	            TipoCertificado tipo) throws Exception {
+
+	        String name = archivo.getName().toLowerCase();
+	        if (name.endsWith(".csv")) {
+	            Path p = archivo.toPath();
+	            List<Map<String, String>> rows = ExcelReaderUtil.readCsv(p);
+	            List<Certificado> certificados = new ArrayList<>();
+	            for (Map<String, String> r : rows) {
+	                Certificado c = mapRowToCertificado(r, tipo);
+	                certificados.add(c);
+	            }
+	            return certificados;
+	        }
 
 	        switch (tipo) {
 
@@ -76,7 +96,9 @@ public class ExcelService {
 	            certificado.setAnexo(obtenerTexto(fila.getCell(11)));
 	            certificado.setDuracion_hs(obtenerTexto(fila.getCell(12)));
 	            certificado.setFecha_egreso(obtenerTexto(fila.getCell(13)));
+	            // ciudadEgreso/localidad: compatibilidad
 	            certificado.setLocalidad(obtenerTexto(fila.getCell(14)));
+	            certificado.setCiudadEgreso(obtenerTexto(fila.getCell(14)));
 	            certificado.setDia_emision(obtenerTexto(fila.getCell(15)));
 	            certificado.setMes_emision(obtenerTexto(fila.getCell(16)));
 	            certificado.setAnio_emision(obtenerTexto(fila.getCell(17)));
@@ -155,6 +177,7 @@ public class ExcelService {
 	            certificado.setCargaHorariaAcumulada(obtenerTexto(fila.getCell(12)));
 	            certificado.setFechaEgreso(obtenerTexto(fila.getCell(13)));
 	            certificado.setCiudadEgreso(obtenerTexto(fila.getCell(14)));
+	            // ahora la fecha completa se puede formar con fechaCertificado
 	            certificado.setDiaCertificado(obtenerTexto(fila.getCell(15)));
 	            certificado.setMesCertificado(obtenerTexto(fila.getCell(16)));
 	            certificado.setAnioCertificado(obtenerTexto(fila.getCell(17)));
@@ -181,6 +204,50 @@ public class ExcelService {
 	        DataFormatter formatter = new DataFormatter();
 
 	        return formatter.formatCellValue(celda).trim();
+	    }
+
+	    // Map-based mapper para filas leídas desde CSV (cabeceras como en certificados_test.csv)
+	    private Certificado mapRowToCertificado(Map<String, String> r, TipoCertificado tipo) {
+	        Certificado c = new Certificado();
+	        switch (tipo) {
+	            case CAPACITACION:
+	                c.setSerie(r.getOrDefault("serie", ""));
+	                c.setNumero(r.getOrDefault("numero", ""));
+	                c.setCfp_numero(r.getOrDefault("cfpNumero", r.getOrDefault("cfpnumero", "")));
+	                c.setNombre(r.getOrDefault("nombre", ""));
+	                c.setDni(r.getOrDefault("dni", ""));
+	                c.setCiudadEgreso(r.getOrDefault("ciudadEgreso", r.getOrDefault("localidad", "")));
+	                c.setFechaEmision(r.getOrDefault("fechaEmision", ""));
+	                c.setCurso(r.getOrDefault("curso", ""));
+	                c.setArea(r.getOrDefault("area", ""));
+	                c.setCargaHorariaAcumulada(r.getOrDefault("cargaHorariaAcumulada", ""));
+	                break;
+	            case TRAYECTORIA:
+	                c.setSerie(r.getOrDefault("serie", ""));
+	                c.setNumero(r.getOrDefault("numero", ""));
+	                c.setNumero2(r.getOrDefault("numero2", ""));
+	                c.setNumero3(r.getOrDefault("numero3", ""));
+	                c.setCfpnumero(r.getOrDefault("cfpNumero", r.getOrDefault("cfpnumero", "")));
+	                c.setNombre(r.getOrDefault("nombre", ""));
+	                c.setDni(r.getOrDefault("dni", ""));
+	                c.setProvinciaNacimiento(r.getOrDefault("provinciaNacimiento", ""));
+	                c.setFechaNacimiento(r.getOrDefault("fechaNacimiento", ""));
+	                c.setCapacitacionCursada(r.getOrDefault("capacitacionCursada", ""));
+	                c.setTrayectoFormativo(r.getOrDefault("trayectoFormativo", ""));
+	                c.setCantidadHoras(r.getOrDefault("cantidadHoras", ""));
+	                c.setCargaHorariaAcumulada(r.getOrDefault("cargaHorariaAcumulada", ""));
+	                c.setFechaEgreso(r.getOrDefault("fechaEgreso", ""));
+	                c.setCiudadEgreso(r.getOrDefault("ciudadEgreso", r.getOrDefault("localidad", "")));
+	                c.setFechaEmision(r.getOrDefault("fechaEmision", ""));
+	                break;
+	            default:
+	                // Para otros tipos simplemente ponemos los campos básicos
+	                c.setSerie(r.getOrDefault("serie", ""));
+	                c.setNombre(r.getOrDefault("nombre", ""));
+	                c.setDni(r.getOrDefault("dni", ""));
+	                break;
+	        }
+	        return c;
 	    }
 
 	}

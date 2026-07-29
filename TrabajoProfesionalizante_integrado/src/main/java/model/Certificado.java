@@ -20,6 +20,7 @@ public class Certificado {
     private String duracion_hs;
     private String fecha_egreso;
     private String localidad;
+    private String fechaEmision; // nuevo campo: fecha completa como string para emisión
     private String dia_emision;
     private String mes_emision;
     private String anio_emision;
@@ -287,7 +288,8 @@ public class Certificado {
     }
 
     public String getCiudadEgreso() {
-        return ciudadEgreso;
+        if (ciudadEgreso != null && !ciudadEgreso.isBlank()) return ciudadEgreso;
+        return (localidad != null) ? localidad : "";
     }
 
     public void setCiudadEgreso(String ciudadEgreso) {
@@ -389,4 +391,67 @@ public class Certificado {
     public void setCargaHorariaAcumulada(String cargaHorariaAcumulada) {
         this.cargaHorariaAcumulada = cargaHorariaAcumulada;
     }
+
+    // --- Compatibilidad camelCase wrappers ---
+    public String getIdentificador1() {
+        return identificador_1;
+    }
+
+    public String getIdentificador2() {
+        return identificador_2;
+    }
+
+    public String getIdentificador3() {
+        return identificador_3;
+    }
+
+    public String getCfpNumero() {
+        if (cfpnumero != null && !cfpnumero.isBlank()) return cfpnumero;
+        return cfp_numero;
+    }
+
+    public String getDuracionHs() {
+        return duracion_hs;
+    }
+
+    public String getDiaEmision() {
+        return dia_emision;
+    }
+
+    public String getMesEmision() {
+        return mes_emision;
+    }
+
+    public String getAnioEmision() {
+        return anio_emision;
+    }
+
+    public String getFechaEmision() {
+        if (fechaEmision != null && !fechaEmision.isBlank()) return fechaEmision;
+        String d = (dia_emision==null)?"":dia_emision;
+        String m = (mes_emision==null)?"":mes_emision;
+        String y = (anio_emision==null)?"":anio_emision;
+        if (!d.isBlank() || !m.isBlank() || !y.isBlank()) {
+            String joined = String.join("/", d, m, y);
+            // Cleanup possible leading/trailing slashes when parts are empty
+            return joined.replaceAll("(^/+)|(\/+$)", "");
+        }
+        return "";
+    }
+
+    public void setFechaEmision(String fechaEmision) {
+        this.fechaEmision = fechaEmision;
+    }
+
+    public String getFechaCertificado() {
+        String d = (diaCertificado==null)?"":diaCertificado;
+        String m = (mesCertificado==null)?"":mesCertificado;
+        String y = (anioCertificado==null)?"":anioCertificado;
+        if (!d.isBlank() || !m.isBlank() || !y.isBlank()) {
+            String joined = String.join("/", d, m, y);
+            return joined.replaceAll("(^/+)|(\/+$)", "");
+        }
+        return "";
+    }
+
 }
